@@ -15,3 +15,68 @@
 */
 
 // SOLUTION
+import java.lang.*;
+import java.util.*;
+
+public class Solution8 {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		int n, ele;
+		System.out.print("Enter the Value of n : ");
+		n = sc.nextInt();
+		ArrayList<Integer> arr = new ArrayList<Integer>(n);
+		for (int i=0; i<n; i++) {
+			System.out.print("Enter a["+(i+1)+"] : ");
+			ele = sc.nextInt();
+			arr.add(ele);
+		}
+		Collections.sort(arr);
+		
+		//Finding the Biggest 3 Blocks
+		int[] b = new int[3];
+		b[0] = 0;
+		b[1] = 0;
+		b[2] = 0;
+
+		int c, c1=0, c2=0, c3=0;
+
+		for(int i=0; i<n; i++) {
+			int temp = arr.get(i);
+			if(temp == -1000)
+				continue;
+			c=1;
+			arr.set(i, -1000);
+			for(int j=0; j<n; j++){
+				if(arr.get(j) == temp){
+					c++;
+					arr.set(j, -1000);
+				}
+			}
+
+			if(c > c1){
+				c3 = c2;
+				b[2] = b[1];
+				c2 = c1;
+				b[1] = b[0];
+				c1 = c;
+				b[1] = temp;
+			}
+			else if(c > c2){
+				c3 = c2;
+				b[2] = b[1];
+				c2 = c;
+				b[1] = temp;
+			}
+			else if(c > c3){
+				c3 = c;
+				b[2] = temp;
+			}
+		}
+
+		System.out.println("Most Frequent Integers : "+b[0]+" "+b[1]+" "+b[2]);
+		System.out.println("Count of Most Frequent Integers : "+c1+" "+c2+" "+c3);
+	}
+
+}
